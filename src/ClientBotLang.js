@@ -51,7 +51,7 @@ const wBot = (lang, tt = 10) => {
             if (matches.length == 0 && lang.default && lang.default.active)
                 matches.push({
                     key: "Default",
-                    message: lang.default.message ?? "Unknow command",
+                    value: lang.default.message ?? "Unknow command",
                 });
             
             // Send message
@@ -107,12 +107,12 @@ wBot({
     },
     language: {
         "hi$": "Hi, how are you?",
-        "hi*": "Hi, hi, hi, hi, hiiii",
+        "(hi)+": "Hi, hi, hi, hi, hiiii",
         "bye$": "Bye, see you", 
         "wBot$": "Servicing you \nHow can I help you?\n My Source Code is in: https://github.com/ZhengLinLei/whatsapp-client-bot",
         "hi(.*)": "Hi, what?",
         "fuck you$": "Don't say that",
         "[a-bA-Z]* is awesome": "I agree!",
-        "[nya|miau]": "Nyaaaa!"
+        "(nya|miau)+": "Nyaaaa!"
     }
 });
