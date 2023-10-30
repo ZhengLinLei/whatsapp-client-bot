@@ -1,0 +1,10 @@
+{
+  "main": "Gruntfile.js",
+  "scripts": {
+    "minify": "grunt uglify:js"
+  },
+  "dependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-uglify": "^5.2.2"
+  }
+}
