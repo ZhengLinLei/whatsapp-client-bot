@@ -66,7 +66,7 @@ const wBot = (lang, tt = 10) => {
     // Write message and click event
     async function enviarScript(scriptText){
         const lines = scriptText.split("\r\n").map(line => line.trim()).filter(line => line);
-        main = document.querySelector("#main"),
+        let main = document.querySelector("#main"),
         textarea = main.querySelector(`div[contenteditable="true"]`)
     
         if(!textarea) throw new Error("You don't have any window opened!")
