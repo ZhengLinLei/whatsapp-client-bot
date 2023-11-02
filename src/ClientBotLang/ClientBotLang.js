@@ -28,10 +28,11 @@ const wBot = (lang, tt = 10) => {
             ).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();                            // ---> Make it readable
 
             // Check if starts with content
-            if (lang.startWith && !rutine.startsWith(lang.startWith))
-                return;
-
-            rutine = rutine.slice(lang.startWith.length);
+            if ("startWith" in lang )
+                if (!rutine.startsWith(lang.startWith))
+                    return;
+            else
+                rutine = rutine.slice(lang.startWith.length ?? 0);
             
             // Get all rutine
             let matches = [];
