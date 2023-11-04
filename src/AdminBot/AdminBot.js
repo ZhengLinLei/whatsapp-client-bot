@@ -220,6 +220,11 @@ BOT.addTask('timer', (input, output) => {
     }
 });
 
+BOT.addTask('error', (input, output) => {
+    // Send
+    output(`Command ${input[0]} not found`);
+});
+
 BOT.addTask('prompt', () => {
     let c = prompt("Silent command to execute");
     if (c) 
