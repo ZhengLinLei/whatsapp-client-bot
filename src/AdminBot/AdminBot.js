@@ -3,6 +3,7 @@ class cBot {
     #_job = {};
     #_tt = 0;
     #_start_with = null;
+    #_enabledGlobal = false;
 
     constructor(start = null, tt = 10) {
         this.#_tt = tt;
@@ -70,7 +71,7 @@ class cBot {
             [p, le, msg] = this.#getProperties();
 
             // Evaluate if msg != lastSaved(message) AND The message is from others
-            if (last != msg && p.childNodes[le-1].querySelector(".message-out")) {
+            if (last != msg && (p.childNodes[le-1].querySelector(".message-out") || this.#_enabledGlobal)) {
                 
                 // Get message | Remove timestamp (-6 length)
                 let command = (
@@ -107,6 +108,16 @@ class cBot {
         } else {
             console.error(`Task ${name} not exist in jobs`);
         }
+    }
+
+    // Enable global commands
+    // Allow other users to execute commands
+    enableGlobal() {
+        this.#_enabledGlobal = true;
+    }
+    // Disable global commands
+    disableGlobal() {
+        this.#_enabledGlobal = false;
     }
 }
 
