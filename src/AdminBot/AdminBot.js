@@ -42,6 +42,23 @@ class cBot {
         return lines.length;
     }
 
+    // Execute task
+    execute (command) {
+        // Check if starts with content
+        if (this.#_start_with && !command.startsWith(this.#_start_with))
+            return;
+
+        command = command.slice(this.#_start_with.length).split(' ');
+        
+        // Pass to task
+        if(command[0] in this.#_job) {
+            this.#_job[command[0]](command, this.sendScript);
+        } else {
+            if ("error" in this.#_job)
+                this.#_job.error(command, this.sendScript);
+        }
+    }
+
     // Run Bot
     run () {
         // Get DOM values
@@ -64,20 +81,8 @@ class cBot {
 
                 );
                 
-                // Check if starts with content
-                if (this.#_start_with && !command.startsWith(this.#_start_with))
-                    return;
-
-                command = command.slice(this.#_start_with.length).split(' ');
-                
-                // Pass to task
-                if(command[0] in this.#_job) {
-                    this.#_job[command[0]](command, this.sendScript);
-                } else {
-                    if ("error" in this.#_job)
-                        this.#_job.error(command, this.sendScript);
-                }
-
+                // Execute
+                this.execute(command);
 
                 // Update message
                 last = msg;
@@ -92,6 +97,15 @@ class cBot {
             console.error(`Task ${name} already exist in jobs`);
         } else {
             this.#_job[name] = callback;
+        }
+    }
+
+    // Remove task
+    removeTask(name) {
+        if (name in this.#_job) {
+            delete this.#_job[name];
+        } else {
+            console.error(`Task ${name} not exist in jobs`);
         }
     }
 }
@@ -204,6 +218,12 @@ BOT.addTask('timer', (input, output) => {
             output(t);
         }, i * 1000);
     }
+});
+
+BOT.addTask('prompt', () => {
+    let c = prompt("Silent command to execute");
+    if (c) 
+        BOT.execute(c);
 });
 
 
