@@ -19,7 +19,7 @@ class cBot {
     }
     
     // Write message and click event
-    async sendScript(scriptText){
+    async sendScript(scriptText, send=true){
         const lines = scriptText.split("\r\n").map(line => line.trim()).filter(line => line);
         let main = document.querySelector("#main");
         let textarea = main.querySelector(`div[contenteditable="true"]`)
@@ -32,10 +32,11 @@ class cBot {
             textarea.focus();
             document.execCommand('insertText', false, line);
             textarea.dispatchEvent(new Event('change', {bubbles: true}));
-    
-            setTimeout(() => {
-                (main.querySelector(`[data-testid="send"]`) || main.querySelector(`[data-icon="send"]`)).click();
-            }, 100);
+            
+            if (send)
+                setTimeout(() => {
+                    (main.querySelector(`[data-testid="send"]`) || main.querySelector(`[data-icon="send"]`)).click();
+                }, 100);
         
             if(lines.indexOf(line) !== lines.length - 1) await new Promise(resolve => setTimeout(resolve, 250));
         }
