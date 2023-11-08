@@ -5,4 +5,4 @@ BOT.addTask('echo', (input, output) => {
         // Send
         output(input);
     }
-});
+}, 'echo {message:any}');

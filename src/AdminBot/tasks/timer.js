@@ -8,4 +8,4 @@ BOT.addTask('timer', (input, output) => {
             output(t);
         }, i * 1000);
     }
-});
+}, 'timer {seconds:int} {message:any}');

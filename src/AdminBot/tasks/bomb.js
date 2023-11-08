@@ -12,4 +12,4 @@ BOT.addTask('bomb', (input, output) => {
         // Send
         output(t);
     }
-});
+}, 'bomb {times:int} {message:any}');

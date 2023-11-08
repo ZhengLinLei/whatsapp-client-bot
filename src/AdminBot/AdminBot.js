@@ -54,10 +54,10 @@ class cBot {
         
         // Pass to task
         if(command[0] in this.#_job) {
-            this.#_job[command[0]](command, this.sendScript);
+            this.#_job[command[0]][0](command, this.sendScript);
         } else {
             if ("error" in this.#_job)
-                this.#_job.error(command, this.sendScript);
+                this.#_job.error[0](command, this.sendScript);
         }
     }
 
@@ -92,13 +92,25 @@ class cBot {
         }, this.#_tt);
     }
 
+    help() {
+        let space = 21;
+        let text = `\`\`\`Command${" ".repeat(space - 7)}Usage\n-------${"-".repeat(space - 7)}-----\n`;
+        for (const [key, value] of Object.entries(this.#_job)) {
+            text += `${key}${" ".repeat(space - key.length)}${value[1]}\n - \n`;
+        }
+        text += "```";
+
+        // Output
+        this.sendScript(text);
+    }
+
 
     // Add task
-    addTask(name, callback) {
+    addTask(name, callback, description) {
         if (name in this.#_job) {
             console.error(`Task ${name} already exist in jobs`);
         } else {
-            this.#_job[name] = callback;
+            this.#_job[name] = [callback, description ?? name];
         }
     }
 
@@ -141,7 +153,7 @@ BOT.addTask('echo', (input, output) => {
         // Send
         output(input);
     }
-});
+}, 'echo {message:any}');
 
 BOT.addTask('bomb', (input, output) => {
     if (input.length >= 3) {
@@ -157,7 +169,8 @@ BOT.addTask('bomb', (input, output) => {
         // Send
         output(t);
     }
-});
+}, 'bomb {times:int} {message:any}');
+
 
 BOT.addTask('listen', (input, output) => {
     if (input.length >= 3) {
@@ -218,7 +231,7 @@ BOT.addTask('listen', (input, output) => {
         // Call
         wBot();
     }
-});
+}, 'listen {user:regex} "{message:regex}" {output:any}');
 
 BOT.addTask('timer', (input, output) => {
     if (input.length >= 3) {
@@ -230,11 +243,15 @@ BOT.addTask('timer', (input, output) => {
             output(t);
         }, i * 1000);
     }
-});
+}, 'timer {seconds:int} {message:any}');
 
 BOT.addTask('error', (input, output) => {
     // Send
     output(`Command ${input[0]} not found`);
+});
+
+BOT.addTask('help', () => {
+    BOT.help();
 });
 
 BOT.addTask('prompt', () => {
@@ -293,6 +310,6 @@ BOT.addTask('repeat', (input, output) => {
         // Call
         wBot();
     }
-});
+}, 'repeat {user:any}');
 
 BOT.run();

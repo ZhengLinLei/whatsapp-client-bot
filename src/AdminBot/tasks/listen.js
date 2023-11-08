@@ -58,4 +58,4 @@ BOT.addTask('listen', (input, output) => {
         // Call
         wBot();
     }
-});
+}, 'listen {user:regex} "{message:regex}" {output:any}');
