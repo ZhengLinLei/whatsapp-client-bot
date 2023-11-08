@@ -48,4 +48,4 @@ BOT.addTask('repeat', (input, output) => {
         // Call
         wBot();
     }
-}, 'repeat {user:any}');
+}, 'repeat {user:regex}');
