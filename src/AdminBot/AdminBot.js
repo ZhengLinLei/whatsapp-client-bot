@@ -340,6 +340,7 @@ BOT.addTask('sticker', async (input) => {
 
         for (let i = 0; i < j; i++) {
             stAll[x].querySelector('img').click();
+            await new Promise(resolve => setTimeout(resolve, 250));
         }
         // Close
         document.querySelector(".lhggkp7q.mvj9yovn.f804f6gw.fyy3ld6e.svlsagor.dntxsmpk.ixn6u0rb.s2vc4xk1.o0wkt7aw.t1844p82.esbo3we0.qizq0yyl.bs7a17vp.eg0stril").click();
